@@ -1,4 +1,4 @@
-### rental-calculator
+### Rental Calculator
 
 React Native app built with Expo. 
 
