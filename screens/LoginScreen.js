@@ -1,12 +1,11 @@
 import Expo from 'expo'
 import React from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
+import firebase from '../config/firebase'
 import { Typography } from '../components'
 
-export default class extends React.Component {
+export default class LoginScreen extends React.Component {
   facebookLogin = async () => {
-    const { firebase } = this.props
-
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
       '1724470454305044',
       { permissions: ['public_profile'] },

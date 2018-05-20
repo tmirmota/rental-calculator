@@ -1,3 +1,3 @@
-export { default as Login } from './Login'
-export { default as Main } from './Main'
-export { default as Assets } from './Assets'
+export { default as LoginScreen } from './LoginScreen'
+export { default as MainScreen } from './MainScreen'
+export { default as AssetsScreen } from './AssetsScreen'
