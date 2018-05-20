@@ -21,11 +21,13 @@ export default class extends React.PureComponent {
   render() {
     const { style: styleProps, variant, ...other } = this.props
 
-    return <Text style={[styles[variant], ...styleProps]} {...other} />
+    return (
+      <Text style={[typographyStyles[variant], ...styleProps]} {...other} />
+    )
   }
 }
 
-const styles = StyleSheet.create({
+export const typographyStyles = StyleSheet.create({
   display5: {
     fontFamily: 'Bodoni 72',
     fontSize: 72,

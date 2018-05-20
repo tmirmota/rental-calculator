@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, View, TextInput, StyleSheet } from 'react-native'
-import Typography from '../components/Typography'
+import Typography, { typographyStyles } from '../components/Typography'
 import colors from '../constants/colorConstants'
 
 export default class extends React.PureComponent {
@@ -21,7 +21,7 @@ export default class extends React.PureComponent {
             onChangeText={value => onChange(name, value)}
             keyboardType={'numeric'}
             clearTextOnFocus={true}
-            style={[styles.h4, styles.input]}
+            style={[typographyStyles.display2, styles.input]}
             ref={input => (this.textInput = input)}
           />
         </View>

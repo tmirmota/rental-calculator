@@ -15,7 +15,7 @@ export default class extends Component {
     options: {},
   }
   render() {
-    const { options, profit, handleChangeOption } = this.props
+    const { options, profit, onChange } = this.props
     return (
       <ScrollView keyboardDismissMode="on-drag">
         <KeyboardAvoidingView behavior="position">
@@ -31,7 +31,7 @@ export default class extends Component {
                   key={key}
                   name={key}
                   value={options[key]}
-                  onChange={handleChangeOption}
+                  onChange={onChange}
                   {...value}
                 />
               ))}
