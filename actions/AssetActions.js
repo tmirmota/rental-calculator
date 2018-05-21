@@ -1,22 +1,31 @@
-createAsset = name => {
-  const assetRef = db.ref(`users/${uid}/assets`)
-  const newAssetRef = assetRef.push()
-}
+import * as types from '../constants/ActionTypes'
+import firebase, { db } from '../config/firebase'
+import { Asset } from '../constants/Records'
 
-handleChangeOption = (key, value) => {
-  const { user, selectedAsset } = this.state
-  const { uid } = user
-  const assetRef = db.ref(`users/${uid}/assets/${selectedAsset}`)
-
-  assetRef.update({
-    [key]: value,
+export const createAsset = () => (dispatch, getState) => {
+  const { user } = getState()
+  db.ref(`users/${user.uid}/assets`).push({
+    displayName: 'New Asset',
+    housePrice: null,
+    rentalPrice: null,
+    utilities: null,
+    maintenance: null,
+    mortgageRate: null,
+    downPayment: null,
   })
 }
 
-// const selectedRef = db.ref(`users/${uid}/selectedAsset`)
-//     selectedRef.on('value', snapshot =>
-//       this.setState({ selectedAsset: snapshot.val() }),
-//     )
+export const updateAsset = (key, value) => (dispatch, getState) => {
+  const { user } = getState()
+  const { uid, selectedAsset } = user
+  const payload = { [key]: value }
 
-//     const assetsRef = db.ref(`users/${uid}/assets`)
-//     assetsRef.on('value', snapshot => this.setState({ assets: snapshot.val() }))
+  db.ref(`users/${uid}/assets/${selectedAsset}`).update(payload)
+
+  dispatch({
+    type: types.UPDATE_ASSET,
+    payload,
+  })
+}
+
+export const deleteAsset = () => ({})

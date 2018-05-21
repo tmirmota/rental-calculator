@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { updateAsset, createAsset } from '../actions/AssetActions'
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -8,14 +10,33 @@ import {
 } from 'react-native'
 import { Row, Box, Divider, Typography } from '../components'
 import optionConstants from '../constants/optionConstants'
+import { Asset } from '../constants/Records'
 
-export default class extends Component {
+@connect(state => MainScreen.getUser(state), {
+  updateAsset,
+  createAsset,
+})
+export default class MainScreen extends Component {
+  static getUser({ user }) {
+    return { user }
+  }
+
   static defaultProps = {
     profit: 'NA',
     options: {},
   }
+
   render() {
-    const { options, profit, onChange } = this.props
+    const { options, profit, updateAsset, user } = this.props
+    const asset = user.assets[user.selectedAsset] || {}
+
+    const { navigation } = this.props
+    const id = navigation.getParam('id', 'NO-ID')
+
+    if (id === null) {
+      this.props.createAsset()
+    }
+
     return (
       <ScrollView keyboardDismissMode="on-drag">
         <KeyboardAvoidingView behavior="position">
@@ -23,6 +44,7 @@ export default class extends Component {
             <View style={styles.header}>
               <Typography variant="display5">${profit}</Typography>
               <Typography variant="display4">Annual Gain</Typography>
+              <Typography variant="display2">{asset.displayName}</Typography>
             </View>
 
             <Row>
@@ -30,8 +52,8 @@ export default class extends Component {
                 <Box
                   key={key}
                   name={key}
-                  value={options[key]}
-                  onChange={onChange}
+                  value={asset[key]}
+                  onChange={updateAsset}
                   {...value}
                 />
               ))}
