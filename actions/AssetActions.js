@@ -29,3 +29,15 @@ export const updateAsset = (key, value) => (dispatch, getState) => {
 }
 
 export const deleteAsset = () => ({})
+
+export const selectAsset = key => (dispatch, getState) => {
+  const { user } = getState()
+  const { uid } = user
+
+  db.ref(`/users/${uid}`).update({ selectedAsset: key })
+
+  dispatch({
+    type: types.SELECT_ASSET,
+    payload: key,
+  })
+}

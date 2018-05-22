@@ -28,7 +28,8 @@ export default class MainScreen extends Component {
 
   render() {
     const { options, profit, updateAsset, user } = this.props
-    const asset = user.assets[user.selectedAsset] || {}
+    const { assets = {} } = user
+    const asset = assets[user.selectedAsset] || {}
 
     const { navigation } = this.props
     const id = navigation.getParam('id', 'NO-ID')

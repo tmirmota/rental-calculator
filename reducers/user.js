@@ -23,6 +23,12 @@ export default (state = initialState, action) => {
         },
       }
 
+    case types.SELECT_ASSET:
+      return {
+        ...state,
+        selectedAsset: action.payload,
+      }
+
     default:
       return state
   }

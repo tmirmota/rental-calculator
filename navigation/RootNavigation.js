@@ -9,6 +9,7 @@ export default createBottomTabNavigator(
     Properties: { screen: AssetsScreen },
     New: { screen: NewScreen },
   },
+  // { initialRouteName: 'Properties' },
   {
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {

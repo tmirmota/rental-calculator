@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, StyleSheet } from 'react-native'
-import { Typography } from '../components'
+import AssetsList from '../components/AssetsList'
 
 @connect(state => AssetsScreen.getAssets(state))
 export default class AssetsScreen extends Component {
@@ -10,14 +10,9 @@ export default class AssetsScreen extends Component {
     return { assets }
   }
   render() {
-    const { assets } = this.props
     return (
       <View style={styles.container}>
-        {Object.entries(assets).map(([key, value]) => (
-          <Typography key={key} variant="display4">
-            {value.displayName}
-          </Typography>
-        ))}
+        <AssetsList />
       </View>
     )
   }
