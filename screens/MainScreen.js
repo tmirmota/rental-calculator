@@ -6,11 +6,13 @@ import {
   StyleSheet,
   View,
   Text,
+  TextInput,
   ScrollView,
 } from 'react-native'
 import { Row, Box, Divider, Typography } from '../components'
 import optionConstants from '../constants/optionConstants'
 import { Asset } from '../constants/Records'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 @connect(state => MainScreen.getUser(state), {
   updateAsset,
@@ -23,29 +25,24 @@ export default class MainScreen extends Component {
 
   static defaultProps = {
     profit: 'NA',
-    options: {},
   }
 
   render() {
-    const { options, profit, updateAsset, user } = this.props
-    const { assets = {} } = user
-    const asset = assets[user.selectedAsset] || {}
-
-    const { navigation } = this.props
-    const id = navigation.getParam('id', 'NO-ID')
-
-    if (id === null) {
-      this.props.createAsset()
-    }
+    const { profit, updateAsset, user } = this.props
+    const { assets = {}, selectedAsset } = user
+    const asset = assets[selectedAsset] || {}
 
     return (
       <ScrollView keyboardDismissMode="on-drag">
-        <KeyboardAvoidingView behavior="position">
+        <KeyboardAwareScrollView>
           <View style={styles.container}>
             <View style={styles.header}>
               <Typography variant="display5">${profit}</Typography>
               <Typography variant="display4">Annual Gain</Typography>
-              <Typography variant="display2">{asset.displayName}</Typography>
+              <TextInput
+                value={asset.displayName}
+                onChangeText={value => updateAsset('displayName', value)}
+              />
             </View>
 
             <Row>
@@ -60,7 +57,7 @@ export default class MainScreen extends Component {
               ))}
             </Row>
           </View>
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
       </ScrollView>
     )
   }

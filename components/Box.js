@@ -53,6 +53,5 @@ const styles = StyleSheet.create({
   },
   input: {
     textAlign: 'right',
-    paddingBottom: 16,
   },
 })
