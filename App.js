@@ -26,7 +26,7 @@ export default class AppContainer extends Component {
   }
 }
 
-@connect(state => state, {fetchUser})
+@connect(state => state, { fetchUser })
 class App extends Component {
   state = {
     isReady: false,
@@ -34,7 +34,6 @@ class App extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      console.log('user', user)
       if (user !== null) {
         this.props.fetchUser(user.uid)
         this.setState({ isReady: true })

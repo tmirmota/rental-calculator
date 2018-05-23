@@ -17,15 +17,31 @@ export default class extends React.PureComponent {
   }
   static defaultProps = {
     style: {},
+    fontWeight: '300',
   }
   render() {
-    const { style: styleProps, variant, ...other } = this.props
+    const { style: styleProps, fontWeight, variant, ...other } = this.props
 
     return (
-      <Text style={[typographyStyles[variant], ...styleProps]} {...other} />
+      <Text
+        style={[
+          typographyStyles[variant],
+          fontWeightStyles[fontWeight],
+          ...styleProps,
+        ]}
+        {...other}
+      />
     )
   }
 }
+
+let fw = {}
+const fontWeights = ['100', '300', '500', '700', 'bold']
+for (let fontWeight of fontWeights) {
+  fw[fontWeight] = { fontWeight }
+}
+
+export const fontWeightStyles = StyleSheet.create(fw)
 
 export const typographyStyles = StyleSheet.create({
   display5: {
@@ -43,11 +59,17 @@ export const typographyStyles = StyleSheet.create({
     fontSize: 24,
     color: colors.text['01'],
     textAlign: 'center',
-    marginBottom: 8,
   },
   display2: {
     fontFamily: 'Futura',
     fontSize: 20,
     color: colors.text['01'],
   },
+  display1: {
+    fontFamily: 'Futura',
+    fontSize: 20,
+  },
+  heading: {},
+  subheading: {},
+  title: {},
 })

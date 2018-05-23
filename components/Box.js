@@ -1,27 +1,51 @@
 import React from 'react'
 import { TouchableOpacity, View, TextInput, StyleSheet } from 'react-native'
-import Typography, { typographyStyles } from '../components/Typography'
+import Typography, {
+  typographyStyles,
+  fontWeightStyles,
+} from '../components/Typography'
 import colors from '../constants/colorConstants'
+import accounting from 'accounting'
 
 export default class extends React.PureComponent {
+  static defaultProps = {
+    variant: 'display3',
+    numOptions: {
+      symbol: '$',
+      format: '%s%v',
+      precision: 0,
+    },
+  }
+
   render() {
-    const { placeholder, onChange, name, value, label } = this.props
+    const {
+      placeholder,
+      onChange,
+      name,
+      value,
+      label,
+      variant,
+      numOptions,
+    } = this.props
+
+    const formattedNum = accounting.formatMoney(value, numOptions)
 
     return (
       <TouchableOpacity
         onPress={() => this.textInput.focus()}
-        style={styles.box}
+        style={styles.container}
+        activeOpacity={0.8}
       >
-        <View style={styles.alignCenter}>
-          <Typography variant="display3">{label}</Typography>
+        <Typography variant={variant}>{label}</Typography>
+        <View>
           <TextInput
-            placeholder={placeholder}
+            placeholder={formattedNum || placeholder}
             name={name}
-            value={value}
-            onChangeText={value => onChange(name, value)}
+            value={formattedNum}
+            onChangeText={value => onChange(name, accounting.unformat(value))}
             keyboardType={'numeric'}
             clearTextOnFocus={true}
-            style={[typographyStyles.display2, styles.input]}
+            style={[typographyStyles[variant], styles.input]}
             ref={input => (this.textInput = input)}
           />
         </View>
@@ -31,27 +55,24 @@ export default class extends React.PureComponent {
 }
 
 const styles = StyleSheet.create({
-  box: {
+  container: {
     flex: 1,
-    minHeight: 128,
-    minWidth: 128,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     backgroundColor: colors.ui['02'],
-    borderColor: colors.text['01'],
+    borderColor: 'rgba(0,0,0,.1)',
     borderWidth: 1,
     borderStyle: 'solid',
-    borderRadius: 4,
-    shadowColor: colors.ui['04'],
+    borderRadius: 2,
+    shadowColor: colors.ui['03'],
     shadowOffset: { height: 1 },
     shadowOpacity: 0.54,
-    margin: 8,
-    padding: 16,
-  },
-  alignCenter: {
-    alignItems: 'center',
+    padding: 8,
+    marginBottom: 8,
   },
   input: {
     textAlign: 'right',
+    minWidth: 120,
   },
 })
